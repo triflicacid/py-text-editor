@@ -1,0 +1,37 @@
+html { height: 100%; }
+body {
+	overflow: scroll; 
+	overflow-x: scoll; 
+	overflow-y: scroll;
+    height: 100%;
+}
+body p{
+	color: black;
+}
+a{ text-decoration: none; }
+a.red{ color: blue; text-decoration: underline; }
+a.red:hover{ color: red!important; text-decoration: underline; }
+
+a.inverse{ color: red; text-decoration: underline; }
+a.inverse:hover{ color: blue!important; text-decoration: underline; }
+
+a.green{ color: blue; text-decoration: underline; }
+a.green:hover{ color: green!important; text-decoration: underline; }
+
+a.orange{ color: blue; text-decoration: underline; }
+a.orange:hover{ color: orange!important; text-decoration: underline; }
+
+a.purple{ color: blue; text-decoration: underline; }
+a.purple:hover{ color: purple!important; text-decoration: underline; }
+
+a.highlight{ text-decoration: none; }
+a.highlight:hover{ text-decoration: none; background-color: yellow!important; }
+
+a.under{ text-decoration: none; }
+a.under:hover{ text-decoration: underline!important; }
+
+a.bold{ text-decoration: none; }
+a.bold:hover{ text-decoration: none; font-weight: bold!important; }
+
+a.dead{ color: blue; text-decoration: line-through!important; }
+a.dead:hover{ color: blue!important; text-decoration: none; cursor: default; }

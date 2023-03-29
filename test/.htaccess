@@ -1,0 +1,79 @@
+##### MAIN HTACCESS #####
+
+DirectoryIndex index.php index.html index.shtml index.htm index.xml
+Options -Indexes
+
+##MANAGE ERRORS
+ErrorDocument 400 /error/raw?e=400
+ErrorDocument 401 /error/raw?e=401
+ErrorDocument 403 /error/raw?e=403
+ErrorDocument 404 /error/raw?e=404
+ErrorDocument 405 /error/raw?e=405
+ErrorDocument 423 /error/raw?e=423
+ErrorDocument 500 /error/raw?e=500
+ErrorDocument 503 /error/raw?e=503
+
+# BLOCK UNNECESSARY REQUEST METHODS
+#RewriteCond %{REQUEST_METHOD} ^(CONNECT|DEBUG|DELETE|MOVE|PUT|TRACE|TRACK) [NC]
+#RewriteRule .* /error/?e=405&m=request%20method%20not%20allowed&r=Not%20Allowed&s=high [F,L]
+
+##DISABLED CACHING
+<filesMatch ".(html|php|js|htaccess|css|json|py|bat|vbs)$">
+	FileETag None
+	#### Access to site
+	#Deny from All
+	#Allow from 192.168.0.
+        #Allow from 80.4.149.98
+	##### ----
+	<ifModule mod_headers.c>
+		Header unset ETag
+		Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+		Header set Pragma "no-cache"
+		Header set Expires "Wed, 08 Jan 1975 05:00:00 GMT"
+	</ifModule>
+</filesMatch>
+
+## Redirect all to a locked page
+RewriteEngine on
+RewriteCond %{REMOTE_ADDR} !^192.168.0.
+RewriteCond %{REMOTE_ADDR} !^94.197.120.82$
+RewriteCond %{REMOTE_ADDR} !^80.4.149.109$
+RewriteCond %{REMOTE_ADDR} !^109.155.130.199$
+RewriteCond %{REMOTE_ADDR} !^86.25.64.229$
+RewriteCond %{REMOTE_ADDR} !^80.4.149.100$
+RewriteCond %{REMOTE_ADDR} !^86.160.175.16$
+RewriteCond %{REMOTE_ADDR} !^94.197.120.241$
+RewriteCond %{REMOTE_ADDR} !^213.205.198.237$
+RewriteCond %{REMOTE_ADDR} !^213.205.198.188$
+RewriteCond %{REMOTE_ADDR} !^109.156.31.160$
+RewriteCond %{REMOTE_ADDR} !^86.155.53.145$
+#HERE#
+RewriteCond %{REQUEST_URI} !^/docs/
+RewriteCond %{REQUEST_URI} !^/htindex.php
+RewriteCond %{REQUEST_URI} !^/error/
+RewriteRule (.*) /htindex.php?ht_redirect=302&redirect_code=2qurdt2ktykiulty [L]
+
+## Block off certain directories
+RewriteRule ^account/dev/login/ /error/raw?e=403
+
+## Throw Error
+RewriteCond %{REQUEST_URI} !^/error/
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteRule (.*) - [R=503,L]
+
+## Scan for bad bots
+RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+RewriteRule ^.* - [R=403,L]
+
+##### END OF FILE ####
+
+
